@@ -7,6 +7,7 @@ import { Header } from "./components/Header";
 import { TaskCard } from "./components/TaskCard";
 
 import styles from "./App.module.css";
+import { tasksMock } from "./mocks/tasks";
 
 export type TTask = {
   id: string;
@@ -15,10 +16,14 @@ export type TTask = {
 };
 
 export function App() {
-  const [tasks, setTasks] = useState<TTask[]>([
-    { id: "12312", description: "task mount hello", completed: false },
-    { id: "12312123", description: "task mount hello 33", completed: true },
-  ]);
+  const [tasks, setTasks] = useState<TTask[]>([...tasksMock].reverse());
+
+  const completedTasksCount = tasks.reduce((prev, cur) => {
+    if (cur.completed) {
+      return prev + 1;
+    }
+    return prev;
+  }, 0);
 
   const handleAddTask = (description: string) => {
     if (!description.length) return;
@@ -55,15 +60,15 @@ export function App() {
 
       <div className={styles.body}>
         <div className={styles["info-row"]}>
-          <div className="created">
+          <div>
             Created Tasks
             <span className={styles.badge}>{tasks.length}</span>
           </div>
 
-          <div className="done-section">
+          <div>
             Completed{" "}
             <span className={styles.badge}>
-              {tasks.length ? `2 of ${tasks.length}` : 0}
+              {tasks.length ? `${completedTasksCount} of ${tasks.length}` : 0}
             </span>
           </div>
         </div>
@@ -76,6 +81,7 @@ export function App() {
               onMarkTaskCompleted={handleMarkTask}
             />
           ))}
+
           {!tasks.length && (
             <div className={styles["empty-feedback"]}>
               <Clipboard />

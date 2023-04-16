@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({ handleAddTask }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(inputValue);
+
     if (!!inputValue.length) {
       handleAddTask(inputValue);
       setInputValue("");

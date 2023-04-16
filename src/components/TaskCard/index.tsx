@@ -1,5 +1,5 @@
 import React from "react";
-import { Trash, Check } from "phosphor-react";
+import { Trash, Check, Circle, CheckCircle } from "phosphor-react";
 
 import styles from "./styles.module.css";
 
@@ -20,18 +20,26 @@ export const TaskCard: React.FC<TaskProps> = ({
   return (
     <div className={styles["task-card"]}>
       <div>
-        <button
+        <label
           className={styles.checkbox}
-          type="button"
-          data-checked={completed}
-          title=""
-          onClick={() => onMarkTaskCompleted({ id, checked: !completed })}
+          htmlFor={`checkbox-${id}`}
+          aria-label="Toogle Task Completed"
         >
-          <Check size={10} weight="bold" />
-        </button>
+          <input
+            type="checkbox"
+            id={`checkbox-${id}`}
+            defaultChecked={completed}
+            onChange={({ target }) => {
+              onMarkTaskCompleted({ id, checked: target.checked });
+            }}
+          />
+          <div className={styles["check-circle"]}>
+            <Check size={10} weight="bold" />
+          </div>
+        </label>
       </div>
 
-      <div>
+      <div className={styles["section-description "]}>
         <p className={styles.description} data-completed={completed}>
           {description}
         </p>
@@ -43,7 +51,7 @@ export const TaskCard: React.FC<TaskProps> = ({
           type="button"
           onClick={() => onDeleteTask(id)}
         >
-          <Trash size={12} fontVariant={"bold"} />
+          <Trash fontVariant={"bold"} />
         </button>
       </div>
     </div>
