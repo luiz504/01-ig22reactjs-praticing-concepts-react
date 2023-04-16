@@ -1,10 +1,12 @@
-import { Header } from "./components/Header";
-
 import { useState } from "react";
+import { v4 } from "uuid";
+
+import { ReactComponent as Clipboard } from "./assets/Clipboard.svg";
+
+import { Header } from "./components/Header";
+import { TaskCard } from "./components/TaskCard";
 
 import styles from "./App.module.css";
-import { TaskCard } from "./components/TaskCard";
-import { v4 } from "uuid";
 
 export type TTask = {
   id: string;
@@ -29,7 +31,7 @@ export function App() {
   };
 
   const handleDeleteTask = (id: TTask["id"]) => {
-    console.log("id", id);
+    setTasks((prev) => prev.filter((task) => task.id !== id));
   };
 
   const handleMarkTask = ({
@@ -74,6 +76,15 @@ export function App() {
               onMarkTaskCompleted={handleMarkTask}
             />
           ))}
+          {!tasks.length && (
+            <div className={styles["empty-feedback"]}>
+              <Clipboard />
+              <strong>You haven't added any tasks yet</strong>
+              <span>
+                Get organized by creating tasks and managing your to-dos
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>
