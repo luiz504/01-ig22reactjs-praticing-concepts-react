@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import styles from "./App.module.css";
 import { TaskCard } from "./components/TaskCard";
+import { v4 } from "uuid";
 
 export type TTask = {
   id: string;
@@ -16,6 +17,16 @@ export function App() {
     { id: "12312", description: "task mount hello", completed: false },
     { id: "12312123", description: "task mount hello 33", completed: true },
   ]);
+
+  const handleAddTask = (description: string) => {
+    if (!description.length) return;
+    const newTask: TTask = {
+      id: v4(),
+      completed: false,
+      description: description,
+    };
+    setTasks((prev) => [newTask, ...prev]);
+  };
 
   const handleDeleteTask = (id: TTask["id"]) => {
     console.log("id", id);
@@ -38,7 +49,7 @@ export function App() {
 
   return (
     <div className={styles.App}>
-      <Header />
+      <Header handleAddTask={handleAddTask} />
 
       <div className={styles.body}>
         <div className={styles["info-row"]}>
