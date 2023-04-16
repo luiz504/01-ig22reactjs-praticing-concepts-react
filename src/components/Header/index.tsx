@@ -1,9 +1,10 @@
 import React from "react";
 import { PlusCircle } from "phosphor-react";
 
+import { ReactComponent as Rocket } from "../../assets/rocket.svg";
+
 import styles from "./styles.module.css";
 
-import { ReactComponent as Rocket } from "../assets/rocket.svg";
 export const Header: React.FC = () => (
   <header className={styles.header}>
     <div className={styles["logo-section"]}>
